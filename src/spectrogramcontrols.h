@@ -37,7 +37,7 @@ public:
     void setDefaults();
 
 signals:
-    void fftOrZoomChanged(int fftSize, int zoomLevel);
+    void fftOrZoomChanged(int fftSize, int zoomLevel, int freqZoomLevel);
     void openFile(QString fileName);
 
 public slots:
@@ -49,6 +49,7 @@ public slots:
 private slots:
     void fftSizeChanged(int value);
     void zoomLevelChanged(int value);
+    void freqZoomLevelChanged(int value);
     void powerMinChanged(int value);
     void powerMaxChanged(int value);
     void fileOpenButtonClicked();
@@ -65,6 +66,7 @@ public:
     QLineEdit *sampleRate;
     QSlider *fftSizeSlider;
     QSlider *zoomLevelSlider;
+    QSlider *freqZoomLevelSlider;
     QSlider *powerMaxSlider;
     QSlider *powerMinSlider;
     QCheckBox *cursorsCheckBox;

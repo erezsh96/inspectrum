@@ -57,6 +57,12 @@ SpectrogramControls::SpectrogramControls(const QString & title, QWidget * parent
 
     layout->addRow(new QLabel(tr("Zoom:")), zoomLevelSlider);
 
+    freqZoomLevelSlider = new QSlider(Qt::Horizontal, widget);
+    freqZoomLevelSlider->setRange(0, 4);
+    freqZoomLevelSlider->setPageStep(1);
+
+    layout->addRow(new QLabel(tr("Freq Zoom:")), freqZoomLevelSlider);
+
     powerMaxSlider = new QSlider(Qt::Horizontal, widget);
     powerMaxSlider->setRange(-140, 10);
     layout->addRow(new QLabel(tr("Power max:")), powerMaxSlider);
@@ -107,6 +113,7 @@ SpectrogramControls::SpectrogramControls(const QString & title, QWidget * parent
 
     connect(fftSizeSlider, &QSlider::valueChanged, this, &SpectrogramControls::fftSizeChanged);
     connect(zoomLevelSlider, &QSlider::valueChanged, this, &SpectrogramControls::zoomLevelChanged);
+    connect(freqZoomLevelSlider, &QSlider::valueChanged, this, &SpectrogramControls::freqZoomLevelChanged);
     connect(fileOpenButton, &QPushButton::clicked, this, &SpectrogramControls::fileOpenButtonClicked);
     connect(cursorsCheckBox, &QCheckBox::stateChanged, this, &SpectrogramControls::cursorsStateChanged);
     connect(powerMinSlider, &QSlider::valueChanged, this, &SpectrogramControls::powerMinChanged);
@@ -146,13 +153,15 @@ void SpectrogramControls::setDefaults()
     powerMaxSlider->setValue(settings.value("PowerMax", 0).toInt());
     powerMinSlider->setValue(settings.value("PowerMin", -100).toInt());
     zoomLevelSlider->setValue(settings.value("ZoomLevel", 0).toInt());
+    freqZoomLevelSlider->setValue(settings.value("FreqZoomLevel", 0).toInt());
 }
 
 void SpectrogramControls::fftOrZoomChanged(void)
 {
     int fftSize = pow(2, fftSizeSlider->value());
     int zoomLevel = std::min(fftSize, (int)pow(2, zoomLevelSlider->value()));
-    emit fftOrZoomChanged(fftSize, zoomLevel);
+    int freqZoomLevel = (int)pow(2, freqZoomLevelSlider->value());
+    emit fftOrZoomChanged(fftSize, zoomLevel, freqZoomLevel);
 }
 
 void SpectrogramControls::fftSizeChanged(int value)
@@ -166,6 +175,13 @@ void SpectrogramControls::zoomLevelChanged(int value)
 {
     QSettings settings;
     settings.setValue("ZoomLevel", value);
+    fftOrZoomChanged();
+}
+
+void SpectrogramControls::freqZoomLevelChanged(int value)
+{
+    QSettings settings;
+    settings.setValue("FreqZoomLevel", value);
     fftOrZoomChanged();
 }
 
