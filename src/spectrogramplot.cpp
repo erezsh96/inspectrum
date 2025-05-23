@@ -37,6 +37,7 @@ SpectrogramPlot::SpectrogramPlot(std::shared_ptr<SampleSource<std::complex<float
 {
     setFFTSize(fftSize);
     zoomLevel = 1;
+    freqZoomLevel = 1;
     powerMax = 0.0f;
     powerMin = -50.0f;
     sampleRate = 0;
@@ -375,11 +376,8 @@ void SpectrogramPlot::setFFTSize(int size)
         window[i] = 0.5f * (1.0f - cos(Tau * i / (fftSize - 1)));
     }
 
-    if (inputSource->realSignal()) {
-        setHeight(fftSize/2);
-    } else {
-        setHeight(fftSize);
-    }
+    int baseHeight = inputSource->realSignal() ? fftSize/2 : fftSize;
+    setHeight(baseHeight * freqZoomLevel);
     auto dev = tuner.deviation();
     auto centre = tuner.centre();
     tuner.setHeight(height());
@@ -403,6 +401,15 @@ void SpectrogramPlot::setPowerMin(int power)
 void SpectrogramPlot::setZoomLevel(int zoom)
 {
     zoomLevel = zoom;
+}
+
+void SpectrogramPlot::setFrequencyZoom(int zoom)
+{
+    freqZoomLevel = zoom;
+    int baseHeight = inputSource->realSignal() ? fftSize/2 : fftSize;
+    setHeight(baseHeight * freqZoomLevel);
+    tuner.setHeight(height());
+    tunerMoved();
 }
 
 void SpectrogramPlot::setSampleRate(double rate)

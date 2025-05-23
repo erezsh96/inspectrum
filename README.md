@@ -6,6 +6,7 @@ inspectrum is a tool for analysing captured signals, primarily from software-def
 ## Features
  * Large (100GB+) file support
  * Spectrogram with zoom/pan
+ * Vertical zoom for detailed frequency inspection
  * Plots of amplitude, frequency, phase and IQ samples
  * Cursors for measuring period, symbol rate and extracting symbols
  * Export of selected time period, filtered samples and demodulated data
