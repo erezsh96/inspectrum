@@ -51,8 +51,7 @@ public slots:
     void invalidateEvent() override;
     void repaint();
     void setCursorSegments(int segments);
-    void setFFTAndZoom(int fftSize, int zoomLevel);
-    void setFrequencyZoom(int zoomLevel);
+    void setFFTAndZoom(int fftSize, int zoomLevel, int freqZoomLevel);
     void setPowerMin(int power);
     void setPowerMax(int power);
 

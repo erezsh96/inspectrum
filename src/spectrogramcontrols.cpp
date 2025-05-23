@@ -160,7 +160,8 @@ void SpectrogramControls::fftOrZoomChanged(void)
 {
     int fftSize = pow(2, fftSizeSlider->value());
     int zoomLevel = std::min(fftSize, (int)pow(2, zoomLevelSlider->value()));
-    emit fftOrZoomChanged(fftSize, zoomLevel);
+    int freqZoomLevel = (int)pow(2, freqZoomLevelSlider->value());
+    emit fftOrZoomChanged(fftSize, zoomLevel, freqZoomLevel);
 }
 
 void SpectrogramControls::fftSizeChanged(int value)
@@ -181,7 +182,7 @@ void SpectrogramControls::freqZoomLevelChanged(int value)
 {
     QSettings settings;
     settings.setValue("FreqZoomLevel", value);
-    emit freqZoomChanged((int)pow(2, value));
+    fftOrZoomChanged();
 }
 
 void SpectrogramControls::powerMinChanged(int value)

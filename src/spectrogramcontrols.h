@@ -37,8 +37,7 @@ public:
     void setDefaults();
 
 signals:
-    void fftOrZoomChanged(int fftSize, int zoomLevel);
-    void freqZoomChanged(int zoomLevel);
+    void fftOrZoomChanged(int fftSize, int zoomLevel, int freqZoomLevel);
     void openFile(QString fileName);
 
 public slots:

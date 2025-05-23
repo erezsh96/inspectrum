@@ -434,7 +434,7 @@ void PlotView::setCursorSegments(int segments)
     emitTimeSelection();
 }
 
-void PlotView::setFFTAndZoom(int size, int zoom)
+void PlotView::setFFTAndZoom(int size, int zoom, int freqZoom)
 {
     auto oldSamplesPerColumn = samplesPerColumn();
 
@@ -447,6 +447,9 @@ void PlotView::setFFTAndZoom(int size, int zoom)
     zoomLevel = zoom;
     if (spectrogramPlot != nullptr)
         spectrogramPlot->setZoomLevel(zoom);
+
+    if (spectrogramPlot != nullptr)
+        spectrogramPlot->setFrequencyZoom(freqZoom);
 
     // Update horizontal (time) scrollbar
     horizontalScrollBar()->setSingleStep(10);
