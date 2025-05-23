@@ -458,6 +458,14 @@ void PlotView::setFFTAndZoom(int size, int zoom, int freqZoom)
     updateView(true, samplesPerColumn() < oldSamplesPerColumn);
 }
 
+void PlotView::setFrequencyZoom(int zoom)
+{
+    freqZoomLevel = zoom;
+    if (spectrogramPlot != nullptr)
+        spectrogramPlot->setFrequencyZoom(zoom);
+    updateView();
+}
+
 void PlotView::setPowerMin(int power)
 {
     powerMin = power;
